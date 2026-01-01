@@ -1,0 +1,21 @@
+name: cicd pipeline
+on:
+  push:
+      branches: "main"
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      - name: Checkout code
+      - uses: actions/checkout@v4
+
+      - name: Login to Dockerhub
+      - uses: docker/lohin-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME}}
+          username: ${{ secrets.DOCKERHUB_PASSWORD}}
+      - name: Build Docker image
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME}}/devops:latest ./proj/
+      - name: Push to docker hub
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME}}/devops:latest 
