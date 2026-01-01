@@ -1,6 +1,6 @@
 FROM python:3.13.9
 WORKDIR /proj
-COPY req.txt
+COPY req.txt .
 RUN pip install -r req.txt
-COPY main.py
+COPY main.py .
 CMD ["uvicorn","proj.main:proj"]
